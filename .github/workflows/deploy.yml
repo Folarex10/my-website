@@ -9,6 +9,13 @@ permissions:
   contents: write
 
 jobs:
+- name: Debug Secret
+  run: |
+    if [ -z "${{ secrets.EC2_SSH_KEY }}" ]; then
+      echo "SSH KEY IS EMPTY"
+    else
+      echo "SSH KEY EXISTS"
+    fi
   deploy:
     runs-on: ubuntu-latest
 
@@ -22,5 +29,5 @@ jobs:
           host: ${{secrets.EC2_HOST}}
           username: ${{secrets.EC2_USERNAME}}
           key: ${{secrets.EC2_SSH_KEY}}
-          source: "index.html, style.css"
+          source: "."
           target: "/var/www/html"
